@@ -20,10 +20,12 @@ namespace PainTolerance
             bodySizeEnd = 5f,
             bodySizeMid = 3f,
             painToleranceEnd = 0f,
-            insectSensitivityMultiplier = 0.75f;
+            insectSensitivityMultiplier = 0.75f,
+            anomalSenstivityMultipler = 1f;
 
         public static bool
-            insectSenstivityBonus = true;
+            insectSenstivityBonus = true,
+            anomalySensitive = true;
 
         public override void ExposeData()
         {
@@ -33,12 +35,16 @@ namespace PainTolerance
             Scribe_Values.Look(ref bodySizeMid, "painToleranceEnd", 0f);
             Scribe_Values.Look(ref insectSensitivityMultiplier, "insectSensitivityMultiplier", 0.75f);
             Scribe_Values.Look(ref insectSenstivityBonus, "insectSenstivityBonus", true);
+            Scribe_Values.Look(ref anomalySensitive, "anomalySensitive", true);
             base.ExposeData();
         }
+        private Vector2 scrollPosition;
         public void DoSettingsWindowContents(Rect inRect)
         {
-            Rect rect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height);
+            Rect rect = new Rect(inRect.x, inRect.y, inRect.width - 20f, inRect.height);
+            Widgets.BeginScrollView(inRect, ref this.scrollPosition, rect, true);
             Listing_PainTolerance options = new Listing_PainTolerance();
+                
             options.Begin(rect);
             options.CustomIntBoxWithButtons("bodySizeStart_Title".Translate(), ref bodySizeStart, 0f, bodySizeEnd - 1f, 0.1f, "bodySizeStart_Desc".Translate());
             options.CustomIntBoxWithButtons("bodySizeEnd_Title".Translate(), ref bodySizeEnd, bodySizeStart + 1f, 99f, 0.1f, "bodySizeEnd_Desc".Translate());
@@ -49,14 +55,19 @@ namespace PainTolerance
             {
                 options.CustomIntBoxWithButtons("insectSensitivityMultiplier_Title".Translate(), ref insectSensitivityMultiplier, 0f, 1f, 0.05f, "insectSensitivityMultiplier_Desc".Translate());
             }
-            options.Gap();
-            options.CustomGraph("Body Size", 400f);
-            options.Gap();
+            if (ModsConfig.AnomalyActive)
+            {
+                options.CustomCheckboxLabeled("anomalySensitive_Title".Translate(), ref anomalySensitive, "anomalySensitive_Desc".Translate());
+            }
+            options.GapLine();
+            options.CustomGraph("Body Size", 250f);
+            options.GapLine(36f);
             if (options.ButtonText("Reset to Defaults"))
             {
                 ResetSettingsToDefault();
             }
             options.End();
+            Widgets.EndScrollView();
         }
         public void ResetSettingsToDefault()
         {
@@ -67,6 +78,7 @@ namespace PainTolerance
 
             insectSenstivityBonus = true;
             insectSensitivityMultiplier = 0.75f;
+            anomalySensitive = true;
 
         }
 

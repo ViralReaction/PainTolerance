@@ -21,6 +21,9 @@
 	<insectSensitivityMultiplier_Title>Insect Senstivitiy Multiplier</insectSensitivityMultiplier_Title>
 	<insectSensitivityMultiplier_Desc>Bonus multiplier for insect senstivity. Lower is better.</insectSensitivityMultiplier_Desc>
 	
+	<anomalySensitive_Title>Anomaly Sensitive</anomalySensitive_Title>
+	<anomalySensitive_Desc>Anomaly entities gain decreasing pain sensitivity as normal creatures.</anomalySensitive_Desc>
+	
 	<PainToleranceGraph>Pain Sensitivity Graph</PainToleranceGraph>
 	
 </LanguageData>

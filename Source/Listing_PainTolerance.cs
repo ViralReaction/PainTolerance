@@ -22,7 +22,7 @@ namespace PainTolerance
             Widgets.Label(new Rect(rect.x, rect.y, 200, 30), "PainToleranceGraph".Translate());
 
             // Define axis bounds
-            float graphHeight = rect.height / 2;
+            float graphHeight = rect.height;
             float graphWidth = graphHeight;
             float xStart = rect.x + 50;
             float yStart = rect.y + 50;
@@ -70,7 +70,7 @@ namespace PainTolerance
 
             // Draw dotted vertical line at the end point (bodySizeEnd)
             DrawDottedVerticalLine(endXPos, yStart, graphHeight, Color.red);
-            base.Gap(this.verticalSpacing);
+            base.Gap(60f);
         }
         public float CalculatePainTolerance(float bodySize)
         {
