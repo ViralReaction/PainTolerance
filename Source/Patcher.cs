@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using RimWorld;
+using UnityEngine;
 
 namespace PainTolerance
 {
@@ -33,9 +34,12 @@ namespace PainTolerance
                 float toleranceValue = CalculatePainTolerance(animal.race.baseBodySize);
 
                 // Insects get bonus pain tolerance
-                if (animal.race.Insect)
+                if (ModSettings_PainTolerance.insectSenstivityBonus)
                 {
-                    toleranceValue *= 0.75f;
+                    if (animal.race.Insect)
+                    {
+                        toleranceValue *= ModSettings_PainTolerance.insectSensitivityMultiplier;
+                    }
                 }
                 if (!animal.race.IsFlesh)
                 {
@@ -56,21 +60,31 @@ namespace PainTolerance
         //4.0           0.31
         //4.5           0.25
         //5.0           0.0
-        static float CalculatePainTolerance(float bodySize)
+        public static float CalculatePainTolerance(float bodySize)
         {
-            float decayConstant = 0.4621f;
+            // Define start, end, and midpoint (where pain tolerance = 0.5)
+            float midpoint = ModSettings_PainTolerance.bodySizeMid;
+            float midpointValue = (1f - ModSettings_PainTolerance.painToleranceEnd) / 2f;
+            // End point where the curve approaches endTolerance
 
-            if (bodySize <= 1.5f)
+            // Calculate the decay constant dynamically based on the start and midpoint
+            float decayConstant = -Mathf.Log(midpointValue) / (midpoint - ModSettings_PainTolerance.bodySizeStart);
+
+            // If the body size is less than or equal to the start, return 1 (full pain tolerance)
+            if (bodySize <= ModSettings_PainTolerance.bodySizeStart)
             {
                 return 1f;
             }
-            else if (bodySize >= 5.0f)
+            // Calculate the dynamic decay, ensuring the pain tolerance approaches endTolerance at bodySizeEnd
+            else if (bodySize <= ModSettings_PainTolerance.bodySizeEnd)
             {
-                return 0f;
+                float normalizedBodySize = (bodySize - ModSettings_PainTolerance.bodySizeStart) / (ModSettings_PainTolerance.bodySizeEnd - ModSettings_PainTolerance.bodySizeStart);
+                return ModSettings_PainTolerance.painToleranceEnd + (1f - ModSettings_PainTolerance.painToleranceEnd) * (1f - normalizedBodySize) * Mathf.Exp(-decayConstant * (bodySize - ModSettings_PainTolerance.bodySizeStart));
             }
+            // For body sizes beyond the end, return the end tolerance (no further decay)
             else
             {
-                return (float)Math.Exp(-decayConstant * (bodySize - 1.5));
+                return ModSettings_PainTolerance.painToleranceEnd;
             }
         }
     }

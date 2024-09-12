@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<Pain_Tolerance>Pain Tolerance</Pain_Tolerance>
+	
+	<bodySizeStart_Title>Body Size Start Curve</bodySizeStart_Title>
+	<bodySizeStart_Desc>The body size that pain sensitivity starts being decreased by the auto-patcher.</bodySizeStart_Desc>
+	
+	<bodySizeEnd_Title>Body Size End Curve</bodySizeEnd_Title>
+	<bodySizeEnd_Desc>The body size that pain sensitivity levels out by the auto-patcher.</bodySizeEnd_Desc>
+	
+	<bodySizeMid_Title>Body Size Midpoint Value</bodySizeMid_Title>
+	<bodySizeMid_Desc>The body size that pain sensitivity will be equal to half way between 100% and the lowest senstivity setting.</bodySizeMid_Desc>
+	
+	<painToleranceEnd_Title>Lowest Sensitivity</painToleranceEnd_Title>
+	<painToleranceEnd_Desc>This is the lowest senstivity that the auto-patcher will apply.</painToleranceEnd_Desc>
+	
+	<insectSenstivityBonus_Title>Insect Sensitivity Bonus?</insectSenstivityBonus_Title>
+	<insectSenstivityBonus_Desc>Unlocks bonus multiplier for decreased sensitivity by insects</insectSenstivityBonus_Desc>
+
+	<insectSensitivityMultiplier_Title>Insect Senstivitiy Multiplier</insectSensitivityMultiplier_Title>
+	<insectSensitivityMultiplier_Desc>Bonus multiplier for insect senstivity. Lower is better.</insectSensitivityMultiplier_Desc>
+	
+	<PainToleranceGraph>Pain Sensitivity Graph</PainToleranceGraph>
+	
+</LanguageData>

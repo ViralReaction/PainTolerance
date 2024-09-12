@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomWidgets.cs" />
+    <Compile Include="Listing_PainTolerance.cs" />
+    <Compile Include="ModSettings_PainTolerance.cs" />
     <Compile Include="Patcher.cs" />
     <Compile Include="Harmony\HediffSet_CalculatePain.cs" />
     <Compile Include="PainTolerance_StatDefOf.cs" />

@@ -7,11 +7,11 @@ namespace PainTolerance
 {
     public class Mod_PainTolerance : Mod
     {
-       // public static ModSettings_PainTolerance settings;
+        public static ModSettings_PainTolerance settings;
 
         public Mod_PainTolerance(ModContentPack content) : base(content)
         {
-            //settings = GetSettings<MedievalOverhaul_Settings>();
+            settings = GetSettings<ModSettings_PainTolerance>();
             Harmony harmony = new (this.Content.PackageIdPlayerFacing);
             harmony.PatchAll();
         }
@@ -20,10 +20,10 @@ namespace PainTolerance
         {
             return "Pain_Tolerance".Translate();
         }
-        //public override void DoSettingsWindowContents(Rect inRect)
-        //{
-        //    settings.DoSettingsWindowContents(inRect);
-        //}
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            settings.DoSettingsWindowContents(inRect);
+        }
         public override void WriteSettings()
         {
             base.WriteSettings();
