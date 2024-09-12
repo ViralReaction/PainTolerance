@@ -21,7 +21,7 @@ namespace PainTolerance
         }
         public static void MakeListofAnimals()
         {
-            var animalList = DefDatabase<ThingDef>.AllDefs.Where(x => x.category == ThingCategory.Pawn && !x.statBases.Any(x => x.stat == PainTolerance_StatDefOf.VR_PainTolerance));
+            var animalList = DefDatabase<ThingDef>.AllDefs.Where(x => x.category == ThingCategory.Pawn && !x.statBases.Any(x => x.stat == PainTolerance_StatDefOf.VR_PainSenstivity));
             foreach (ThingDef animal in animalList)
             {
                 AllAnimals.Add(animal);
@@ -41,12 +41,15 @@ namespace PainTolerance
                         toleranceValue *= ModSettings_PainTolerance.insectSensitivityMultiplier;
                     }
                 }
+                if (ModsConfig.AnomalyActive && animal.race.IsAnomalyEntity && !ModSettings_PainTolerance.anomalySensitive)
+                {
+                    toleranceValue = 1f;
+                }
                 if (!animal.race.IsFlesh)
                 {
                     toleranceValue = 0f;
                 }
-
-                animal.statBases.Add(new StatModifier { stat = PainTolerance_StatDefOf.VR_PainTolerance, value = toleranceValue } );
+                animal.statBases.Add(new StatModifier { stat = PainTolerance_StatDefOf.VR_PainSenstivity, value = toleranceValue } );
             }
         }
 

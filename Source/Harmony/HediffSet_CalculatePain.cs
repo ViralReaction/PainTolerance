@@ -12,7 +12,7 @@ namespace PainTolerance
         static void Postfix(HediffSet __instance, ref float __result)
         {
 
-            __result *= __instance.pawn.GetStatValue(PainTolerance_StatDefOf.VR_PainTolerance);
+            __result *= __instance.pawn.GetStatValue(PainTolerance_StatDefOf.VR_PainSenstivity);
         }
     }
 }

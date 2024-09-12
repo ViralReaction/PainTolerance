@@ -6,7 +6,7 @@ namespace PainTolerance
     public static class PainTolerance_StatDefOf
     {
        
-        public static StatDef VR_PainTolerance;  
+        public static StatDef VR_PainSenstivity;  
 
         static PainTolerance_StatDefOf()
         {
