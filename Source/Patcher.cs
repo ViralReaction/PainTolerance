@@ -20,13 +20,10 @@ namespace PainTolerance
         }
         public static void MakeListofAnimals()
         {
-            var animalList = DefDatabase<ThingDef>.AllDefs.Where(x => x.category == ThingCategory.Pawn && !x.statBases.Any(x => x.stat == PainTolerance_StatDefOf.VR_PainTolerance) && !x.race.IsAnomalyEntity);
+            var animalList = DefDatabase<ThingDef>.AllDefs.Where(x => x.category == ThingCategory.Pawn && !x.statBases.Any(x => x.stat == PainTolerance_StatDefOf.VR_PainTolerance));
             foreach (ThingDef animal in animalList)
             {
-                if (animal.race.IsFlesh)
-                {
-                    AllAnimals.Add(animal);
-                }
+                AllAnimals.Add(animal);
             }
         }
         static void AutoPatch()
@@ -36,9 +33,13 @@ namespace PainTolerance
                 float toleranceValue = CalculatePainTolerance(animal.race.baseBodySize);
 
                 // Insects get bonus pain tolerance
-                if ( animal.race.Insect)
+                if (animal.race.Insect)
                 {
                     toleranceValue *= 0.75f;
+                }
+                if (!animal.race.IsFlesh)
+                {
+                    toleranceValue = 0f;
                 }
 
                 animal.statBases.Add(new StatModifier { stat = PainTolerance_StatDefOf.VR_PainTolerance, value = toleranceValue } );
