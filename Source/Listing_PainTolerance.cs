@@ -32,7 +32,9 @@ namespace PainTolerance
             Widgets.DrawLineHorizontal(xStart, yStart + graphHeight, graphWidth);
             Widgets.DrawLineVertical(xStart, yStart, graphHeight);
 
+
             // Loop through body sizes and plot points
+            bool drawSecondCurve = ModSettings_PainTolerance.insectSenstivityBonus;
             int steps = 500; // The number of increments for plotting
             for (int i = 0; i <= steps; i++)
             {
@@ -52,7 +54,7 @@ namespace PainTolerance
 
                 Rect pointRect = new Rect(xPos - blockSize / 2f, yPos - blockSize / 2f, blockSize, blockSize); // Smaller block
                 Widgets.DrawBoxSolid(pointRect, Color.green);
-                if (ModSettings_PainTolerance.insectSenstivityBonus)
+                if (drawSecondCurve)
                 {
                     Rect pointRectSecond = new Rect(xPos - blockSize / 2f, yPosSecond - blockSize / 2f, blockSize, blockSize);
                     Widgets.DrawBoxSolid(pointRectSecond, Color.blue);
@@ -74,31 +76,37 @@ namespace PainTolerance
         }
         public float CalculatePainTolerance(float bodySize)
         {
-            // Define start, end, and midpoint (where pain tolerance = 0.5)
-            float midpoint = ModSettings_PainTolerance.bodySizeMid;
-            float midpointValue = (1f - ModSettings_PainTolerance.painToleranceEnd) / 2f;
-            // End point where the curve approaches endTolerance
+            // Define start, midpoint, and end for the body size range
+            float bodySizeStart = ModSettings_PainTolerance.bodySizeStart;
+            float bodySizeMid = ModSettings_PainTolerance.bodySizeMid;
+            float bodySizeEnd = ModSettings_PainTolerance.bodySizeEnd;
+            float lowestToleranceValue = ModSettings_PainTolerance.painToleranceEnd;
 
-            // Calculate the decay constant dynamically based on the start and midpoint
-            float decayConstant = -Mathf.Log(midpointValue) / (midpoint - ModSettings_PainTolerance.bodySizeStart);
+            // Calculate midpoint value: (1 - lowestToleranceValue) / 2
+            float midpointValue = (1f - (1.0f - lowestToleranceValue) / 2.0f);
 
-            // If the body size is less than or equal to the start, return 1 (full pain tolerance)
-            if (bodySize <= ModSettings_PainTolerance.bodySizeStart)
+            float painTolerance;
+
+            // If the body size is between start and midpoint
+            if (bodySize <= bodySizeMid)
             {
-                return 1f;
+                // Linear interpolation between 1 and midpoint value
+                return Mathf.Lerp(1f, midpointValue, (bodySize - bodySizeStart) / (bodySizeMid - bodySizeStart));
+                
             }
-            // Calculate the dynamic decay, ensuring the pain tolerance approaches endTolerance at bodySizeEnd
-            else if (bodySize <= ModSettings_PainTolerance.bodySizeEnd)
+            // If the body size is between midpoint and end
+            else if (bodySize <= bodySizeEnd)
             {
-                float normalizedBodySize = (bodySize - ModSettings_PainTolerance.bodySizeStart) / (ModSettings_PainTolerance.bodySizeEnd - ModSettings_PainTolerance.bodySizeStart);
-                return ModSettings_PainTolerance.painToleranceEnd + (1f - ModSettings_PainTolerance.painToleranceEnd) * (1f - normalizedBodySize) * Mathf.Exp(-decayConstant * (bodySize - ModSettings_PainTolerance.bodySizeStart));
+                // Linear interpolation between midpoint value and lowestToleranceValue
+                return Mathf.Lerp(midpointValue, lowestToleranceValue, (bodySize - bodySizeMid) / (bodySizeEnd - bodySizeMid));
             }
-            // For body sizes beyond the end, return the end tolerance (no further decay)
+            // Beyond bodySizeEnd, return lowestToleranceValue
             else
             {
-                return ModSettings_PainTolerance.painToleranceEnd;
+                return painTolerance = lowestToleranceValue;
             }
         }
+
         private void DrawDottedVerticalLine(float x, float yStart, float height, Color color)
         {
             float dotHeight = 5f; // Height of each dot
