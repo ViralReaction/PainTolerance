@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 using RimWorld;
 using UnityEngine;
@@ -12,24 +9,32 @@ namespace PainTolerance
     [StaticConstructorOnStartup]
     public static class Patcher
     {
-        public static List<ThingDef> AllAnimals = new List<ThingDef>();
+        public static HashSet<ThingDef> AllAnimals = [];
+        public static HashSet<ThingDef> MissingStatBase = [];
+        public static Dictionary<ThingDef, float> cachedPainTolerance = [];
         static Patcher()
         {
             MakeListofAnimals();
             AutoPatch();
+            CacheStatDefs();
 
         }
         public static void MakeListofAnimals()
         {
-            var animalList = DefDatabase<ThingDef>.AllDefs.Where(x => x.category == ThingCategory.Pawn && !x.statBases.Any(x => x.stat == PainTolerance_StatDefOf.VR_PainSenstivity));
+            var animalList = DefDatabase<ThingDef>.AllDefs.Where(x => x.category == ThingCategory.Pawn);
             foreach (ThingDef animal in animalList)
             {
                 AllAnimals.Add(animal);
+                if (animal.statBases.StatListContains(PainTolerance_StatDefOf.VR_PainSenstivity))
+                {
+                    MissingStatBase.Add(animal);
+                }
             }
         }
         static void AutoPatch()
         {
-            foreach (ThingDef animal in AllAnimals)
+            //var animalList = DefDatabase<ThingDef>.AllDefs.Where(x => x.category == ThingCategory.Pawn && !x.statBases.Any(x => x.stat == PainTolerance_StatDefOf.VR_PainSenstivity));
+            foreach (ThingDef animal in MissingStatBase)
             {
                 float toleranceValue = CalculatePainTolerance(animal.race.baseBodySize);
 
@@ -49,9 +54,18 @@ namespace PainTolerance
                 {
                     toleranceValue = 0f;
                 }
-                animal.statBases.Add(new StatModifier { stat = PainTolerance_StatDefOf.VR_PainSenstivity, value = toleranceValue } );
+                animal.statBases.Add(new StatModifier { stat = PainTolerance_StatDefOf.VR_PainSenstivity, value = toleranceValue });
             }
+           
         }
+        static void CacheStatDefs()
+        {
+            foreach (ThingDef animal in AllAnimals)
+            {
+                cachedPainTolerance.Add(animal, animal.statBases.GetStatValueFromList(PainTolerance_StatDefOf.VR_PainSenstivity, 1f));
+            }    
+        }
+
 
         //Curve for decayConstant = 0.4621f
         //Body Size     Pain Tolerance
