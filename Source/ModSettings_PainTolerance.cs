@@ -18,8 +18,8 @@ namespace PainTolerance
         public static float
             bodySizeStart = 1.5f,
             bodySizeEnd = 5f,
-            bodySizeMid = 4f,
-            painToleranceEnd = 0.60f,
+            bodySizeMid = 3f,
+            painToleranceEnd = 0.20f,
             insectSensitivityMultiplier = 0.75f,
             anomalSenstivityMultipler = 1f;
 
@@ -31,8 +31,8 @@ namespace PainTolerance
         {
             Scribe_Values.Look(ref bodySizeStart, "bodySizeStart", 1.5f);
             Scribe_Values.Look(ref bodySizeEnd, "bodySizeEnd", 5f);
-            Scribe_Values.Look(ref bodySizeMid, "decayConstant", 4f);
-            Scribe_Values.Look(ref bodySizeMid, "painToleranceEnd", 0.6f);
+            Scribe_Values.Look(ref bodySizeMid, "bodySizeMid", 3f);
+            Scribe_Values.Look(ref painToleranceEnd, "painToleranceEnd", 0.2f);
             Scribe_Values.Look(ref insectSensitivityMultiplier, "insectSensitivityMultiplier", 0.75f);
             Scribe_Values.Look(ref insectSenstivityBonus, "insectSenstivityBonus", true);
             Scribe_Values.Look(ref anomalySensitive, "anomalySensitive", true);
@@ -73,8 +73,8 @@ namespace PainTolerance
         {
             bodySizeStart = 1.5f;
             bodySizeEnd = 5f;
-            bodySizeMid = 4f;
-            painToleranceEnd = 0.60f;
+            bodySizeMid = 3f;
+            painToleranceEnd = 0.20f;
 
             insectSenstivityBonus = true;
             insectSensitivityMultiplier = 0.75f;

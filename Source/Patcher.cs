@@ -25,7 +25,7 @@ namespace PainTolerance
             foreach (ThingDef animal in animalList)
             {
                 AllAnimals.Add(animal);
-                if (animal.statBases.StatListContains(PainTolerance_StatDefOf.VR_PainSenstivity))
+                if (!animal.statBases.StatListContains(PainTolerance_StatDefOf.VR_PainSenstivity))
                 {
                     MissingStatBase.Add(animal);
                 }
@@ -89,7 +89,6 @@ namespace PainTolerance
             float midpointValue = (1f - (1.0f - lowestToleranceValue) / 2.0f);
 
             float painTolerance;
-
             // If the body size is between start and midpoint
             if (bodySize <= bodySizeMid)
             {
