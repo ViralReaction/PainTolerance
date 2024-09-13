@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<name>Pain Tolerance</name>
+	<name>Natural Pain Sensitivity</name>
 	<author>ViralReaction</author>
 	<supportedVersions>
 		<li>1.5</li>
@@ -19,5 +19,5 @@
 	</modDependencies>
 	<incompatibleWith>
 	</incompatibleWith>
-	<description>Pain Tolerance</description>
+	<description>Adds natural pain sensitivity to pawns based on body size. Designed to increase danger levels of bigger animals in conjuction with mods that actually allow pawns to reliablity shoot.</description>
 </ModMetaData>

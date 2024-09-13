@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-	<Pain_Tolerance>Pain Tolerance</Pain_Tolerance>
+	<Pain_Tolerance>Natural Pain Sensitivity</Pain_Tolerance>
 	
 	<bodySizeStart_Title>Body Size Start Curve</bodySizeStart_Title>
 	<bodySizeStart_Desc>The body size that pain sensitivity starts being decreased by the auto-patcher.</bodySizeStart_Desc>
