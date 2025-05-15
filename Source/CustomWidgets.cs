@@ -10,6 +10,7 @@ using Verse.Sound;
 
 namespace PainTolerance
 {
+    [StaticConstructorOnStartup]
     public class CustomWidgets
     {
         public static void DrawIntOptionWithButtons(Rect rect, ref float value, string label, float minValue, float maxValue, float stepperValue)
