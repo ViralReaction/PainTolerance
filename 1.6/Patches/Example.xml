@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+	<!-- Senstivity is a float and goes from 0 to 1. Lower means less pain received -->
+	<!-- <Operation Class="PatchOperationAdd"> -->
+		<!-- <xpath>Defs/ThingDef[@Name="BaseBear"]/statBases </xpath> -->
+		<!-- <value> -->
+			<!-- <VR_PainSenstivity>0.75</VR_PainSenstivity> -->
+		<!-- </value> -->
+	<!-- </Operation> -->
+
+</Patch>
